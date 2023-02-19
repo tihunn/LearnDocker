@@ -6,7 +6,9 @@ import {Form} from './Form'
 function App() {
   const [notes, setNotes] = useState([])
 
-  const baseURL = "http://localhost:5000"
+  const baseURL = process.env.NODE_ENV === "production"
+    ? "http://45.67.59.147:5000"
+    : "http://localhost:5000"
   const api = axios.create({baseURL})
 
   async function createNote(text) {
