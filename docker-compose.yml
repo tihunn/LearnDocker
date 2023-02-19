@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  mongodb:
+    image: "mongo"
+    volumes:
+      - mongo-data:/data/db
+    env_file:
+      - ./config/development.evn
+  frontend:
+    build: ./client
+    ports:
+      - "3000:3000"
+    volumes:
+      - C:/docker-mern/docker-mern/client/src:/app/src
+    env_file:
+      - ./config/development.evn
+  backend:
+    build: ./server
+    ports:
+      - "5000:5000"
+    volumes:
+      - C:/docker-mern/docker-mern/server:/app
+      - /app/node_modules
+    env_file:
+      - ./config/development.evn
+    depends_on:
+      - mongodb
+volumes:
+  mongo-data:
+    driver: local
